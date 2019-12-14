@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TripActionChallenge</string>
+    <string name="action_search">Search</string>
+    <string name="toast_no_results">No articles found.</string>
+    <string name="progress_loading">Loading articles…</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="pref_begin_date">pref_begin_date</string>
+    <string name="pref_end_date">pref_end_date</string>
+    <string name="pref_sort_order">pref_sort_order</string>
+    <string name="title_detail_activity">Read Article</string>
+    <string name="pref_news_desk">pref_news_desk</string>
+</resources>
