@@ -38,7 +38,6 @@ public class ApiServiceSingleton {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(apiKeyInterceptor)
-//                .addNetworkInterceptor(new StethoInterceptor())  // Enable Stetho network inspection
                 .build();
 
         // Create Retrofit instance

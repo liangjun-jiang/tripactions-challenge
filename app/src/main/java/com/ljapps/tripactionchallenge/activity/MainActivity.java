@@ -14,8 +14,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -36,8 +35,6 @@ import com.ljapps.tripactionchallenge.util.Util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,10 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up RecyclerView
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        // With GAP_HANDLING_NONE, no reshuffling of items ot top of list (when scrolling back),
-        // but possible gap (with default gap handling strategy it's the reverse)
-        //layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        //GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         mScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -91,13 +84,11 @@ public class MainActivity extends AppCompatActivity {
         b.recyclerView.addOnScrollListener(mScrollListener);
 
         RecyclerViewItemClickSupport.addTo(b.recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
-            // TODO: pass Doc object instead of only URL (make DOC extend Parcelable)
             Intent intent = new Intent(mActivity, DetailActivity.class);
             intent.putExtra(EXTRA_ARTICLE_URL, mArticles.get(position).getWebUrl());
             startActivity(intent);
         });
 
-        //query("Clinton", null, null, null, null, null);
     }
 
     @Override
@@ -107,18 +98,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
-    // Change color of filter menu icon to accent color (addTint=true) or white (addTint=false)
-    public void tintFilterIcon(boolean addTint) {
-        Drawable drawable = mFilterMenuItem.getIcon();
-        if (drawable != null) {
-            drawable.mutate();
-            if (addTint)
-                drawable.setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
-            else
-                drawable.setColorFilter(null);
-        }
-    }
 
     private ProgressDialog setupProgressDialog() {
         ProgressDialog p =  new ProgressDialog(mActivity);
@@ -193,8 +172,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 try {
                     ArrayList<Doc> articles = (ArrayList<Doc>) response.body().getResponse().getDocs();
-                    if (articles.isEmpty()) {}
-                    //Util.toastLong(mActivity, getString(R.string.toast_no_results));
+                    if (articles.isEmpty()) {
+                        Util.toastLong(mActivity, getString(R.string.toast_no_results));
+                    }
                     else
                         mAdapter.appendArticles(articles);
                 }
